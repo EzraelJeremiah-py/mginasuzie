@@ -6,7 +6,7 @@ export default function Home() {
   const [openProject, setOpenProject] = useState(null);
 
   useEffect(() => {
-    fetch("https://mginasuzie-tfje.vercel.app/api/portfolio") // adjust if backend URL differs
+    fetch("https://https://mginasuzie.onrender.com/api/portfolio") // adjust if backend URL differs
       .then(res => res.json())
       .then(data => setPortfolio(data))
       .catch(err => console.error("Fetch error:", err));
