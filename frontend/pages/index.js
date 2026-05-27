@@ -24,38 +24,30 @@ export default function Home() {
   return (
     <div className="bg-light min-vh-100 d-flex flex-column">
       
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div className="container-fluid">
-          <a className="navbar-brand fw-bold text-primary" href="#">
-            {portfolio.name}
-          </a>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
+      {/* Hero */}
       <header 
-        className="text-center py-5 mb-4 text-white" 
+        className="text-center py-5 text-white shadow"
         style={{
-          background: "linear-gradient(270deg, #6610f2, #0d6efd, #20c997)",
-          backgroundSize: "600% 600%",
-          animation: "gradientMove 15s ease infinite"
+          background: "linear-gradient(135deg, #6f42c1, #0d6efd, #20c997)",
+          backgroundSize: "400% 400%",
+          animation: "gradientShift 12s ease infinite"
         }}
       >
-        <div className="container">
-          <h1 className="fw-bold">{portfolio.title}</h1>
-          <p className="lead">{portfolio.profile}</p>
-        </div>
+        <h1 className="fw-bold">{portfolio.name}</h1>
+        <h3 className="fw-light">{portfolio.title}</h3>
+        <p className="mt-3">{portfolio.profile}</p>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-grow-1 container px-3">
+      {/* Content */}
+      <main className="container py-5 flex-grow-1">
         
         {/* Skills */}
         <section className="mb-5 text-center">
           <h2 className="text-success mb-3">Skills</h2>
           {portfolio.skills.map((s, i) => (
-            <span key={i} className="badge bg-success me-2 mb-2 fs-6 shadow-sm">{s}</span>
+            <span key={i} className="badge rounded-pill bg-success me-2 mb-2 fs-6 shadow-sm">
+              {s}
+            </span>
           ))}
         </section>
 
@@ -63,17 +55,7 @@ export default function Home() {
         <section className="mb-5 text-center">
           <h2 className="text-info mb-3">Qualifications</h2>
           {portfolio.qualifications.map((q, i) => (
-            <span 
-              key={i} 
-              className="badge me-2 mb-2 fs-6 shadow-sm"
-              style={{
-                backgroundColor: "#000",
-                color: "gold",
-                fontWeight: "bold",
-                padding: "0.6rem 1rem",
-                borderRadius: "0.5rem"
-              }}
-            >
+            <span key={i} className="badge rounded-pill bg-dark text-warning me-2 mb-2 fs-6 shadow-sm">
               🎓 {q}
             </span>
           ))}
@@ -119,13 +101,14 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="text-center py-3 mt-5 bg-dark text-white">
-        <small>© {new Date().getFullYear()} {portfolio.name} Portfolio | Built with Next.js & Flask</small>
+      <footer className="text-center py-3 bg-gradient text-white" 
+        style={{background: "linear-gradient(90deg, #0d6efd, #20c997)"}}>
+        <small>© {new Date().getFullYear()} {portfolio.name} Portfolio</small>
       </footer>
 
       {/* Gradient Animation */}
       <style jsx>{`
-        @keyframes gradientMove {
+        @keyframes gradientShift {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
