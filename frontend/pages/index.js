@@ -1,81 +1,136 @@
-// pages/index.js
 import { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Home() {
   const [portfolio, setPortfolio] = useState(null);
-  const [openProject, setOpenProject] = useState(null);
 
   useEffect(() => {
     fetch("https://mginasuzie.onrender.com/api/portfolio")
       .then(res => res.json())
       .then(data => setPortfolio(data))
-      .catch(err => console.error("Fetch error:", err));
+      .catch(err => console.error("Error fetching portfolio:", err));
   }, []);
 
   if (!portfolio) {
-    return <p className="text-center mt-10 text-gray-600">Loading...</p>;
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="font-sans bg-gradient-to-b from-pink-50 via-white to-indigo-50 min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-indigo-700 to-pink-600 text-white py-12 text-center shadow-lg">
-        <h1 className="text-4xl font-bold tracking-wide">{portfolio.name}</h1>
-        <p className="mt-2 text-lg">{portfolio.title}</p>
-        <p className="mt-3 max-w-2xl mx-auto text-indigo-100">{portfolio.profile}</p>
+    <div className="bg-light min-vh-100 d-flex flex-column">
+      
+      {/* Navbar */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div className="container-fluid">
+          <a className="navbar-brand fw-bold text-primary" href="#">
+            {portfolio.name}
+          </a>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <header 
+        className="text-center py-5 mb-4 text-white" 
+        style={{
+          background: "linear-gradient(270deg, #6610f2, #0d6efd, #20c997)",
+          backgroundSize: "600% 600%",
+          animation: "gradientMove 15s ease infinite"
+        }}
+      >
+        <div className="container">
+          <h1 className="fw-bold">{portfolio.title}</h1>
+          <p className="lead">{portfolio.profile}</p>
+        </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow max-w-5xl mx-auto px-8 py-14 space-y-14">
+      <main className="flex-grow-1 container px-3">
+        
         {/* Skills */}
-        <section>
-          <h2 className="text-2xl font-semibold text-indigo-700 border-b-4 border-pink-400 pb-2 mb-6">Skills</h2>
-          <p className="text-gray-700 text-lg">{portfolio.skills.join(" • ")}</p>
+        <section className="mb-5 text-center">
+          <h2 className="text-success mb-3">Skills</h2>
+          {portfolio.skills.map((s, i) => (
+            <span key={i} className="badge bg-success me-2 mb-2 fs-6 shadow-sm">{s}</span>
+          ))}
         </section>
 
         {/* Qualifications */}
-        <section>
-          <h2 className="text-2xl font-semibold text-indigo-700 border-b-4 border-pink-400 pb-2 mb-6">Qualifications</h2>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
-            {portfolio.qualifications.map((q, i) => <li key={i}>{q}</li>)}
-          </ul>
+        <section className="mb-5 text-center">
+          <h2 className="text-info mb-3">Qualifications</h2>
+          {portfolio.qualifications.map((q, i) => (
+            <span 
+              key={i} 
+              className="badge me-2 mb-2 fs-6 shadow-sm"
+              style={{
+                backgroundColor: "#000",
+                color: "gold",
+                fontWeight: "bold",
+                padding: "0.6rem 1rem",
+                borderRadius: "0.5rem"
+              }}
+            >
+              🎓 {q}
+            </span>
+          ))}
         </section>
 
-        {/* Projects with dropdown */}
-        <section>
-          <h2 className="text-2xl font-semibold text-indigo-700 border-b-4 border-pink-400 pb-2 mb-6">Projects</h2>
-          <div className="space-y-6">
-            {portfolio.projects.map((proj, i) => (
-              <div key={i} className="bg-white rounded-lg shadow hover:shadow-xl transition p-4">
-                <button
-                  onClick={() => setOpenProject(openProject === i ? null : i)}
-                  className="w-full text-left text-xl font-bold text-indigo-800 focus:outline-none"
+        {/* Projects Dropdown */}
+        <section className="mb-5">
+          <h2 className="text-warning mb-3 text-center">Projects</h2>
+          <div className="accordion" id="projectsAccordion">
+            {portfolio.projects.map((p, i) => (
+              <div className="accordion-item" key={i}>
+                <h2 className="accordion-header" id={`heading${i}`}>
+                  <button 
+                    className="accordion-button collapsed fw-semibold" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target={`#collapse${i}`}
+                  >
+                    {p.title}
+                  </button>
+                </h2>
+                <div 
+                  id={`collapse${i}`} 
+                  className="accordion-collapse collapse" 
+                  data-bs-parent="#projectsAccordion"
                 >
-                  {proj.title}
-                </button>
-                {openProject === i && (
-                  <p className="mt-3 text-gray-700 animate-fadeIn">{proj.description}</p>
-                )}
+                  <div className="accordion-body text-muted">
+                    {p.description}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Contact */}
-        <section>
-          <h2 className="text-2xl font-semibold text-indigo-700 border-b-4 border-pink-400 pb-2 mb-6">Contact</h2>
-          <ul className="space-y-2 text-gray-700 text-lg">
-            <li>Email: {portfolio.contact.email}</li>
-            <li>Phone: {portfolio.contact.phone}</li>
-            <li>Location: {portfolio.contact.location}</li>
-          </ul>
+        <section className="mb-5 text-center">
+          <h2 className="text-danger mb-3">Contact</h2>
+          <p>📧 {portfolio.contact.email}</p>
+          <p>📍 {portfolio.contact.location}</p>
+          <p>📞 {portfolio.contact.phone}</p>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-indigo-700 to-pink-600 text-white text-center py-6 mt-10">
-        <p className="text-sm">© {new Date().getFullYear()} {portfolio.name} Portfolio | All Rights Reserved</p>
+      <footer className="text-center py-3 mt-5 bg-dark text-white">
+        <small>© {new Date().getFullYear()} {portfolio.name} Portfolio | Built with Next.js & Flask</small>
       </footer>
+
+      {/* Gradient Animation */}
+      <style jsx>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
     </div>
   );
 }
