@@ -25,7 +25,7 @@ export default function Home() {
     <div className="bg-light min-vh-100 d-flex flex-column">
   {/* Hero */}
     <header 
-    className="text-center py-5 text-white shadow"
+    className="text-center py-5 text-black shadow"
       style={{
         backgroundColor: "magenta"
       }}
