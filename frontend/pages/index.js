@@ -40,7 +40,7 @@ export default function Home() {
       <main className="container py-5 flex-grow-1">
       {/* Skills */}
         <section className="mb-5 text-center">
-        <h2 className="text-white mb-3">Skills</h2>
+        <h2 className="text-purple mb-3">Skills</h2>
       {portfolio.skills.map((s, i) => (
         <span 
         key={i} 
