@@ -23,33 +23,38 @@ export default function Home() {
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-column">
-      
-      {/* Hero */}
-      <header 
-        className="text-center py-5 text-white shadow"
-        style={{
-          background: "linear-gradient(135deg, #6f42c1, #0d6efd, #20c997)",
-          backgroundSize: "400% 400%",
-          animation: "gradientShift 12s ease infinite"
-        }}
-      >
-        <h1 className="fw-bold">{portfolio.name}</h1>
-        <h3 className="fw-light">{portfolio.title}</h3>
-        <p className="mt-3">{portfolio.profile}</p>
-      </header>
+  {/* Hero */}
+    <header 
+    className="text-center py-5 text-white shadow"
+      style={{
+        backgroundColor: "magenta"
+      }}
+>
+  <h1 className="fw-bold">{portfolio.name}</h1>
+  <h3 className="fw-light">{portfolio.title}</h3>
+  <p className="mt-3">{portfolio.profile}</p>
+  </header>
+
 
       {/* Content */}
       <main className="container py-5 flex-grow-1">
-        
-        {/* Skills */}
+      {/* Skills */}
         <section className="mb-5 text-center">
-          <h2 className="text-success mb-3">Skills</h2>
-          {portfolio.skills.map((s, i) => (
-            <span key={i} className="badge rounded-pill bg-success me-2 mb-2 fs-6 shadow-sm">
-              {s}
-            </span>
-          ))}
-        </section>
+        <h2 className="text-white mb-3">Skills</h2>
+      {portfolio.skills.map((s, i) => (
+        <span 
+        key={i} 
+        className="badge rounded-pill me-2 mb-2 fs-6 shadow-sm"
+          style={{
+            backgroundColor: "cyan",   // card color
+            color: "black"             // text color for contrast
+              }}
+>
+{s}
+</span>
+  ))}
+    </section>
+
 
         {/* Qualifications */}
         <section className="mb-5 text-center">
